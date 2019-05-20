@@ -1,0 +1,17 @@
+{
+    "name": "pokeface/jingdong-league",
+    "authors": [
+        {
+            "name": "pokeface",
+            "email": "ye3245@sina.com"
+        }
+    ],
+    "require": {
+        "ixudra/curl": "6.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "JingDongLeague\\": "src"
+        }
+    }
+}
