@@ -7,29 +7,25 @@ namespace JingDongLeague\Union\Kernel;
 
 use JingDongLeague\Union\Kernel\Http\Api;
 
-class BaseClient
+abstract class BaseClient
 {
     
 
-    protected $request;
+    protected $http;
     protected $method;
+    protected $pre_req;
     
     public function __construct(ServiceContainer $app)
     {
         $this->app = $app;
-        $this->request = new Api($app->app_key,$app->app_secret);
+        $this->http = new Api($app->app_key,$app->app_secret);
     }
     
 
-    public function httpGet($query=[])
+    public function request($query=[])
     {
-        return $this->request->get($this->method,$query);
+        return $this->http->request($this->method,[$this->pre_req=>$query]);
     }
     
-   
-    public function httpPost($query=[])
-    {
-        return $this->request->post($this->method,$query);
-    }
     
 }

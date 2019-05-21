@@ -2,7 +2,7 @@
 
 
 
-namespace JingDongLeague\Union\Kernel\Support;
+namespace JingDongLeague\Kernel;
 
 
 

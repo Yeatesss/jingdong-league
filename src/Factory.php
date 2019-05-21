@@ -12,12 +12,12 @@
 namespace JingDongLeague;
 
 
-use JingDongLeague\Union\Kernel\Support\Str;
+use JingDongLeague\Kernel\Str;
 /**
  * Class Factory.
  *
  * @method static \JingDongLeague\Union\Application            union(array $config)
-
+ * @method static \JingDongLeague\OpenAuthPlatForm\Application            openAuthPlatForm(array $config)
  */
 class Factory
 {

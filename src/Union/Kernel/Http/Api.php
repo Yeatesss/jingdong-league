@@ -5,40 +5,48 @@
 namespace JingDongLeague\Union\Kernel\Http;
 
 
-
-use Ixudra\Curl\Facades\Curl;
 use JingDongLeague\Exception\UnionException;
+use JingDongLeague\Kernel\Http;
 
-class Api
+class Api extends UnionApiIterator
 {
     const URL = 'https://router.jd.com/api';
+    private $param = [
+        'http'=>'',
+        'appKey'=>'',
+        'appSecret'=>'',
+        'timestamp'=>'',
+        'v'=>'',
+        'method'=>'',
+        'signMethod'=>'',
+        'requestParams'=>'',
+    ];
+    private $status;
+    private $hasNext=false;
     
-    private $appKey;
-    private $appSecret;
-    private $timestamp;
-    private $v;
-    private $method;
-    private $signMethod;
-    private $requestParams;
+    
     
     public function __construct($appKey, $appSecret)
     {
-        $this->appKey = $appKey;
-        $this->appSecret = $appSecret;
-        $this->timestamp = date('Y-m-d H:i:s', time());
-        $this->v='1.0';
-        $this->signMethod = 'md5';
+        $this->param['appKey'] = $appKey;
+        $this->param['appSecret'] = $appSecret;
+        $this->param['timestamp'] = date('Y-m-d H:i:s', time());
+        $this->param['v']='1.0';
+        $this->param['signMethod'] = 'md5';
+        if(!$this->param['http']){
+            $this->param['http'] = new Http();
+        }
     }
     
     public function makeParams():array {
         $systemParameter = array(
-            'app_key' => $this->appKey,
+            'app_key' => $this->param['appKey'],
             'format' => 'json',
-            'v' => $this->v,
-            'timestamp' => $this->timestamp,
-            'method' => $this->method,
-            'sign_method' => $this->signMethod,
-            'param_json' => json_encode($this->requestParams)
+            'v' => $this->param['v'],
+            'timestamp' => $this->param['timestamp'],
+            'method' => $this->param['method'],
+            'sign_method' => $this->param['signMethod'],
+            'param_json' => json_encode($this->param['requestParams'])
         );
         $sign = $this->getStringToSign($systemParameter);
         $parameter = array_merge($systemParameter, ['sign' => $sign]);
@@ -61,59 +69,54 @@ class Api
             }
         }
         
-        $str = $this->appSecret . $str . $this->appSecret;
+        $str = $this->param['appSecret'] . $str . $this->param['appSecret'];
         
         $signature = strtoupper(md5($str));
         
         return $signature;
     }
     
-    public function post($method,$requestParams=[]){
-        $this->method = $method;
-        $this->requestParams = $requestParams;
+    public function request($method,$requestParams=[]){
+        $this->param['method'] = $method;
+        $this->param['requestParams'] = $requestParams;
         $data = $this->makeParams();
-        $response = Curl::to(self::URL)
-            ->withData($data)
-            ->asJsonResponse(true)
-            ->post();
-        if(isset($response['errorResponse'])){
-            throw new UnionException(json_encode($response));
+        $response = call_user_func_array([$this->param['http'],'post'],[self::URL,$data]);
+        $this->status = $response->status;
+        $content = $response->content;
+        if(isset($content['errorResponse'])){
+            throw new UnionException(json_encode($content));
         }
-        $response = isset(current($response)['result'])?current($response)['result']:'';
-        $response && $response = json_decode($response,true);
-        if(isset($response) && $response['code']==200){
-            return $response['data'];
-        }else{
-            if(isset($response['message'])){
-                throw new UnionException($response['message']);
-            }else{
-                throw new UnionException(json_encode($response));
+        array_walk_recursive ($content,function($value,$key){
+    
+            if($key=='result'){
+    
+                $result = json_decode($value,true);
+                $this->items = isset($result) && isset($result['data'])?$result['data']:[];
+                $this->hasNext = isset($result) && isset($result['hasMore'])?$result['hasMore']:false;
+    
+                if($result['code']!=200) throw new UnionException($result['message']);
             }
-        }
+        });
+        return $this;
+        
     }
     
-    public function get($method,$requestParams){
-        $this->method = $method;
-        $this->requestParams = $requestParams;
-        $data = $this->makeParams();
-        $response = Curl::to(self::URL)
-            ->withData($data)
-            ->asJsonResponse(true)
-            ->get();
-        $response = isset(current($response)['result'])?current($response)['result']:'';
-        $response && $response = json_decode($response,true);
-        if(isset($response) && $response['code']==200){
-            return $response['data'];
-        }else{
-            if(isset($response['message'])){
-                throw new UnionException($response['message']);
-            }else{
-                throw new UnionException(json_encode($response));
-            }
+    public function toArray(){
+        return $this->items;
+    }
+    public  function isEmpty(){
+        if($this->items){
+            return false;
         }
-    
+        return true;
     
     }
-
-
+    
+    public function __get($name)
+    {
+        if(isset($this->items[$name])) return $this->items[$name];
+        throw new \ErrorException(sprintf('Undefined property: %s::$%s',__CLASS__,$name));
+    }
+    
+    
 }

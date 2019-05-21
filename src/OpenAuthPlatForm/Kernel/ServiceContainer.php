@@ -2,7 +2,7 @@
 
 
 
-namespace JingDongLeague\Union\Kernel;
+namespace JingDongLeague\OpenAuthPlatForm\Kernel;
 
 
 use Pimple\Container;
@@ -32,6 +32,7 @@ class ServiceContainer extends Container
     public function __construct(array $config = [], array $prepends = [])
     {
         $this->registerProviders($this->getProviders());
+
         parent::__construct($prepends);
 
         $this->userConfig = $config;

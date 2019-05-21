@@ -11,7 +11,6 @@ class Goods extends BaseClient
 {
     
     protected $method = 'jd.union.open.goods.query';
-    public function get($query=[]){
-        return $this->httpPost(['goodsReqDTO'=>$query]);
-    }
+    protected $pre_req = 'goodsReqDTO';
+    
 }

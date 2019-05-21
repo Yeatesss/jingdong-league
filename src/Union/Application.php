@@ -4,7 +4,6 @@
 namespace JingDongLeague\Union;
 
 use JingDongLeague\Union\Kernel\ServiceContainer;
-use ServiceProvider;
 
 /**
  * Class Application.
@@ -17,6 +16,7 @@ use ServiceProvider;
  * @property \JingDongLeague\Union\Promotion\Request\Common    common
  * @property \JingDongLeague\Union\Promotion\Request\ByUnionId    byUnionId
  * @property \JingDongLeague\Union\Promotion\Request\BySubUnionId    bySubUnionId
+ * @property JingDongLeague\Union\Order\Request\Order order
  */
 class Application extends ServiceContainer
 {
@@ -26,6 +26,7 @@ class Application extends ServiceContainer
     protected $providers = [
         Goods\ServiceProvider::class,
         Promotion\ServiceProvider::class,
+        Order\ServiceProvider::class
     ];
 
     /**

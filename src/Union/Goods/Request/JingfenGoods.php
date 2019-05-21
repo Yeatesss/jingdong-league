@@ -11,7 +11,6 @@ class JingfenGoods extends BaseClient
 {
     
     protected $method = 'jd.union.open.goods.jingfen.query';
-    public function get($query){
-        return $this->httpPost(['goodsReq'=>$query]);
-    }
+    protected $pre_req = 'goodsReq';
+    
 }

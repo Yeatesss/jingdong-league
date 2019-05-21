@@ -14,12 +14,6 @@ $app= Factory::union([
 ```
 
 
-| 方法名|方法示例|参数|
-|----|----|----|
-|获取分类|$app->categoryGoods->get($data)|<a href="#获取分类">详细参数</a>|
-|京粉精选商品|$app->jingfenGoods->get($data)|"eliteId"=>11<br>'pageIndex'=>2<br>'pageSize'=>20<br>'sortName'=>'price'<br>'sort'=>'desc'|
-|关键词商品查询接口(需申请)|$app->goods->get($data)|"eliteId"=>11<br>'pageIndex'=>2<br>'pageSize'=>20<br>'sortName'=>'price'<br>'sort'=>'desc'|
-
 ####详参
 
 <a name="获取分类">获取分类</a>
@@ -27,9 +21,11 @@ $app= Factory::union([
 
 | 方法名|方法示例|参数|
 |----|----|----|
-|获取分类|$app->categoryGoods->get($data)|<a href="#获取分类">详细参数</a>|
-|京粉精选商品|$app->jingfenGoods->get($data)|<a href="#京粉精选商品">详细参数</a>|
-|关键词商品查询接口(需申请)|$app->goods->get($data)|<a href="#关键词商品查询接口">详细参数</a>|
+|获取分类|$app->categoryGoods->request($data)|<a href="#获取分类">详细参数</a>|
+|京粉精选商品|$app->jingfenGoods->request($data)|<a href="#京粉精选商品">详细参数</a>|
+|关键词商品查询接口(需申请)|$app->goods->request($data)|<a href="#关键词商品查询接口">详细参数</a>|
+|获取通用推广链接|$app->common->request($data)|<a href="#获取通用推广链接">详细参数</a>|
+|获取订单信息|$app->order->request($data);|<a href="#获取订单信息">详细参数</a>|
 
 <a name="获取分类">获取分类</a>
 
@@ -73,3 +69,26 @@ $app= Factory::union([
 |isHot|int|否|1|是否是爆款，1：爆款商品，0：非爆款商品|
 |brandCode|String|否|7998|品牌code|
 |shopId|int|否|45619|店铺Id|
+
+<a name="获取通用推广链接">获取通用推广链接</a>
+
+|参数名|参数类型|是否必填|参数样例|参数简介|
+|----|----|----|----|----|
+|materialId|String|是|https://item.jd.com/23484023378.html|推广物料
+|siteId|String|是|435676|站点id
+|positionId|long|否|6|推广位id
+|subUnionId|String|否|618_18_c35***e6a|子联盟ID（需要联系运营开通权限才能拿到数据）
+|ext1|String|否|100_618_618|推客生成推广链接时传入的扩展字段（查看订单对应字段信息，需要联系运营开放白名单才能看到）
+|pid|String|否|618_618_6018|联盟子站长身份标识，格式：子站长ID_子站长网站ID_子站长推广位ID
+|shopId|int|否|45619|店铺Id|
+
+
+<a name="获取订单信息">获取订单信息</a>
+
+|参数名|参数类型|是否必填|参数样例|参数简介|
+|----|----|----|----|----|
+|pageNo|String|是|1|页码
+|pageSize|int|是|500|最大显示500
+|type|int|是|1|订单时间查询类型(1：下单时间，2：完成时间，3：更新时间)
+|time|String|是|2019052111|查询时间，建议使用分钟级查询，格式：yyyyMMddHH、yyyyMMddHHmm或yyyyMMddHHmmss，如201811031212 的查询范围从12:12:00--12:12:59
+
