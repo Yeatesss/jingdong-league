@@ -10,6 +10,7 @@ use JingDongLeague\Union\Kernel\BaseClient;
 class PromotionGoods extends BaseClient
 {
     
-    #todo
+    protected $method = 'jd.union.open.goods.promotiongoodsinfo.query';
+    protected $pre_req = '';
     
 }

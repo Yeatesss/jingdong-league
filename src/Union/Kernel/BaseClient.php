@@ -24,7 +24,8 @@ abstract class BaseClient
 
     public function request($query=[])
     {
-        return $this->http->request($this->method,[$this->pre_req=>$query]);
+        $param = $this->pre_req?[$this->pre_req=>$query]:$query;
+        return $this->http->request($this->method,$param);
     }
     
     
