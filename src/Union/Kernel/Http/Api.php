@@ -22,10 +22,13 @@ class Api extends UnionApiIterator
         'requestParams'=>'',
     ];
     private $status;
+    private $total;
     private $hasNext=false;
     
     
-    
+    public function total(){
+        return $this->total;
+    }
     public function __construct($appKey, $appSecret)
     {
         $this->param['appKey'] = $appKey;
@@ -87,10 +90,10 @@ class Api extends UnionApiIterator
             throw new UnionException(json_encode($content));
         }
         array_walk_recursive ($content,function($value,$key){
-    
             if($key=='result'){
     
                 $result = json_decode($value,true);
+                $this->total = isset($result) && isset($result['totalCount'])?$result['totalCount']:1;
                 $this->items = isset($result) && isset($result['data'])?$result['data']:[];
                 $this->hasNext = isset($result) && isset($result['hasMore'])?$result['hasMore']:false;
     

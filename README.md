@@ -26,6 +26,7 @@ $app= Factory::union([
 |关键词商品查询接口(需申请)|$app->goods->request($data)|<a href="#关键词商品查询接口">详细参数</a>|
 |获取通用推广链接|$app->common->request($data)|<a href="#获取通用推广链接">详细参数</a>|
 |获取订单信息|$app->order->request($data);|<a href="#获取订单信息">详细参数</a>|
+|获取推广商品详情|$app->promotionGoods->request($data);|<a href="#获取推广商品详情">详细参数</a>|
 
 <a name="获取分类">获取分类</a>
 
@@ -91,4 +92,10 @@ $app= Factory::union([
 |pageSize|int|是|500|最大显示500
 |type|int|是|1|订单时间查询类型(1：下单时间，2：完成时间，3：更新时间)
 |time|String|是|2019052111|查询时间，建议使用分钟级查询，格式：yyyyMMddHH、yyyyMMddHHmm或yyyyMMddHHmmss，如201811031212 的查询范围从12:12:00--12:12:59
+
+<a name="获取推广商品详情">获取推广商品详情</a>
+
+|参数名|参数类型|是否必填|参数样例|参数简介|
+|----|----|----|----|----|
+|skuIds|String|是|3907427,12321321|商品ID
 
