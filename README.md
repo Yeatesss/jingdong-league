@@ -1,4 +1,4 @@
-# jingdong-league
+# jingdong-league  （还在开发补充中。。。。）
 ##京东联盟
 #####实例化
 ``` 实例化
