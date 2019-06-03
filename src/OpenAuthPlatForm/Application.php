@@ -4,6 +4,7 @@
 namespace JingDongLeague\OpenAuthPlatForm;
 
 use JingDongLeague\OpenAuthPlatForm\Kernel\ServiceContainer;
+use JingDongLeague\OpenAuthPlatForm\Order\ServiceProvider;
 
 /**
  * Class Application.
@@ -11,6 +12,9 @@ use JingDongLeague\OpenAuthPlatForm\Kernel\ServiceContainer;
  * @author yzc
  *
  * @property \JingDongLeague\OpenAuthPlatForm\OAuth\Request\GenerateCode    generateCode
+ * @property \JingDongLeague\OpenAuthPlatForm\PromotionSite\Request\Query    promotionSiteQuery
+ * @property \JingDongLeague\OpenAuthPlatForm\Order\Request\WithKey    syncOrderWithKey
+
  */
 class Application extends ServiceContainer
 {
@@ -18,7 +22,11 @@ class Application extends ServiceContainer
      * @var array
      */
     protected $providers = [
-        OAuth\ServiceProvider::class
+        OAuth\ServiceProvider::class,
+        PromotionSite\ServiceProvider::class,
+        Promotion\ServiceProvider::class,
+        Order\ServiceProvider::class
+
     ];
 
     /**

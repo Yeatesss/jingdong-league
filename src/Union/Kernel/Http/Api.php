@@ -6,7 +6,6 @@ namespace JingDongLeague\Union\Kernel\Http;
 
 
 use JingDongLeague\Exception\UnionException;
-use JingDongLeague\Kernel\Http;
 
 class Api extends UnionApiIterator
 {

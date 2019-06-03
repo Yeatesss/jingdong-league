@@ -35,7 +35,8 @@ class ServiceContainer extends Container
 
         parent::__construct($prepends);
 
-        $this->userConfig = $config;
+        $this->userConfig = array_merge(config('jingdong.oauth_public_param'),$config);
+        $this->userConfig = array_merge(config('jingdong.oauth_public_param'),$config);
 
 
     }
@@ -58,7 +59,7 @@ class ServiceContainer extends Container
      * @param mixed  $value
      */
     public function __set($id, $value)
-    {
+    {dd($id,$value);
         $this->offsetSet($id, $value);
     }
    
@@ -69,6 +70,9 @@ class ServiceContainer extends Container
         return $this->providers;
     }
 
+    public function config(){
+        return $this->userConfig;
+    }
     
 
     /**

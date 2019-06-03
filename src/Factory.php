@@ -27,7 +27,7 @@ class Factory
      *
      * @return \JingDongLeague\Kernel\ServiceContainer
      */
-    public static function make($name, array $config)
+    public static function make($name, array $config=[])
     {
         $namespace = Str::studly($name);
         $application = "\\JingDongLeague\\{$namespace}\\Application";

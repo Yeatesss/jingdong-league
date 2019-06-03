@@ -5,6 +5,8 @@
 namespace JingDongLeague\OpenAuthPlatForm\Kernel\Http;
 
 
+use function foo\func;
+use JingDongLeague\Exception\OpenAuthPlatFormException;
 use JingDongLeague\Kernel\Http;
 
 class Api extends OpenApiIterator
@@ -12,44 +14,47 @@ class Api extends OpenApiIterator
     private $url = '';
     private $http;
     private $status;
-    public function __construct()
+    private $errorMsg;
+
+    
+    public function __construct(Http $http)
     {
         if(!$this->http){
-            $this->http = new Http();
+            $this->http = $http;
         }
     }
     
     public function get($requestParams){
         $this->url = call_user_func_array('sprintf',array_merge(['url'=>$this->url],$requestParams));
-        dd($this->url);
         $response = call_user_func_array([$this->http,'get'],[$this->url]);
-        dd($response);
-        $this->status = $response->status;
         $content = $response->content;
-//        if(isset($content['errorResponse'])){
-//            throw new UnionException(json_encode($content));
-//        }
-//        array_walk_recursive ($content,function($value,$key){
-//
-//            if($key=='result'){
-//
-//                $result = json_decode($value,true);
-//                $this->items = isset($result) && isset($result['data'])?$result['data']:[];
-//                $this->hasNext = isset($result) && isset($result['hasMore'])?$result['hasMore']:false;
-//
-//                if($result['code']!=200) throw new UnionException($result['message']);
-//            }
-//        });
-//        return $this;
-        
-        dd($response);
+        return $content;
+
     }
     
     public function post($requestParams){
-    
+        $response = call_user_func_array([$this->http,'post'],[$this->url,$requestParams]);
+        $content = $response->content;
+        if(isset($content['error_response'])){
+            throw new OpenAuthPlatFormException(json_encode($content));
+        }
+        return $content;
+//        $result = current($content);
+//        if($result['code']==0){
+//            unset($result['code']);
+//            $this->result = json_decode(current($result),true);
+//        }
     }
-    public function request($requset_type,$requestParams=[]){
-        call_user_func_array([$this,$requset_type],array($requestParams));
+    public function request($requset_type,$requestParams=[],$callback=''){
+        $response = call_user_func_array([$this,$requset_type],array($requestParams));
+        empty($callback) && $callback = function($response){
+            $data['original'] = $data['items'] = $response;
+        };
+        $data = $callback($response);
+        array_walk($data,function($value,$pron){
+            $this->$pron = $value;
+        });
+
         return $this;
         
     }
@@ -69,7 +74,11 @@ class Api extends OpenApiIterator
         $this->url = $url;
         return $this;
     }
-    
+
+
+    public function status(){
+        return $this->status;
+    }
     public function __get($name)
     {
         if(isset($this->items[$name])) return $this->items[$name];

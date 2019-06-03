@@ -16,7 +16,13 @@ class ServiceContainer extends Container
      */
     protected $providers = [];
     
-
+    protected $default_config = [
+        'appKey'=>'',
+        'appSecret'=>'',
+        'timestamp'=>'',
+        'v'=>'1.0',
+        'signMethod'=>'md5',
+    ];
     /**
      * @var array
      */
@@ -34,7 +40,7 @@ class ServiceContainer extends Container
         $this->registerProviders($this->getProviders());
         parent::__construct($prepends);
 
-        $this->userConfig = $config;
+        $this->userConfig = array_merge($this->default_config,$config);
 
 
     }
@@ -67,8 +73,10 @@ class ServiceContainer extends Container
     {
         return $this->providers;
     }
-
     
+    public function config(){
+        return $this->userConfig;
+    }
 
     /**
      * @param array $providers

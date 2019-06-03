@@ -26,7 +26,9 @@ class Application extends ServiceContainer
     protected $providers = [
         Goods\ServiceProvider::class,
         Promotion\ServiceProvider::class,
-        Order\ServiceProvider::class
+        Order\ServiceProvider::class,
+        Pid\ServiceProvider::class
+
     ];
 
     /**
