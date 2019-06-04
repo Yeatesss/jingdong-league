@@ -51,6 +51,7 @@ class Api extends OpenApiIterator
             $data['original'] = $data['items'] = $response;
         };
         $data = $callback($response);
+
         array_walk($data,function($value,$pron){
             $this->$pron = $value;
         });
@@ -84,6 +85,12 @@ class Api extends OpenApiIterator
         if(isset($this->items[$name])) return $this->items[$name];
         throw new \ErrorException(sprintf('Undefined property: %s::$%s',__CLASS__,$name));
     }
+
+    public function __call($method_name, $args){
+        if (empty($args) && $this->$method_name) {
+            return $this->$method_name;
+        }
+     }
     
     
 }
