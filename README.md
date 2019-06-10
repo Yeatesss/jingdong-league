@@ -19,6 +19,7 @@
 |用refresh换取token|$app->refreshAccessToken->request($data)|<a href="#用refresh换取token">详细参数</a>|
 |获取推广位|$a->promotionSiteQuery->request($data)|<a href="#获取推广位">详细参数</a>|
 |工具商同步订单|$open->syncOrderWithKey->request($data)|<a href="#工具商同步订单">详细参数</a>|
+|优惠券,商品二合一转接API-通过unionId获取推广链接|$open->couponCodeByUnionId->request($data)|<a href="#优惠券,商品二合一转接API-通过unionId获取推广链接">详细参数</a>|
 
 
 <a name="获取授权Code链接">获取授权Code链接</a>
@@ -64,7 +65,15 @@
 |time|int|是|1|页码|
 |pageSize|int|是|12|显示个数|
 
+<a name="优惠券,商品二合一转接API-通过unionId获取推广链接">优惠券,商品二合一转接API-通过unionId获取推广链接</a>
 
+|参数名|参数类型|是否必填|参数样例|参数简介|
+|----|----|----|----|----|
+|couponUrl|string|是|http://coupon.m.jd.com/coupons/show.action?key=42b0e3cb1d50489caa3fa2ba5ef1d077&roleId=20354624&to=ytfzyybj.jd.com|优惠券链接|
+|materialIds|int|是|1232131321|商品skuID|
+|unionId|int|是|12111111|联盟ID|
+|positionId|int|是|12|推广位id|
+|pid|string|是|12fea_2312321_fefef|子帐号身份标识|
 
 ```$xslt\
 京东官方订单接口返回值

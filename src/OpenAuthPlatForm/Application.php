@@ -14,6 +14,7 @@ use JingDongLeague\OpenAuthPlatForm\Order\ServiceProvider;
  * @property \JingDongLeague\OpenAuthPlatForm\OAuth\Request\GenerateCode    generateCode
  * @property \JingDongLeague\OpenAuthPlatForm\PromotionSite\Request\Query    promotionSiteQuery
  * @property \JingDongLeague\OpenAuthPlatForm\Order\Request\WithKey    syncOrderWithKey
+ * @property \JingDongLeague\OpenAuthPlatForm\Promotion\Request\CouponCodeByUnionId    couponCodeByUnionId
 
  */
 class Application extends ServiceContainer
