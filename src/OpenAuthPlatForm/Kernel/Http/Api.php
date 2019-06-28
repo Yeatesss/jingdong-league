@@ -76,6 +76,9 @@ class Api extends OpenApiIterator
         return $this;
     }
 
+    public function error(){
+        return $this->errorMsg;
+    }
 
     public function status(){
         return $this->status;
