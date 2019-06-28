@@ -82,6 +82,7 @@ class Api extends UnionApiIterator
         $this->param['method'] = $method;
         $this->param['requestParams'] = $requestParams;
         $data = $this->makeParams();
+
         $response = call_user_func_array([$this->param['http'],'post'],[self::URL,$data]);
         $this->status = $response->status;
         $content = $response->content;

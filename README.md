@@ -18,6 +18,7 @@
 |获取授权AccessToken|$app->accessToken->request($data)|<a href="#获取授权AccessToken">详细参数</a>|
 |用refresh换取token|$app->refreshAccessToken->request($data)|<a href="#用refresh换取token">详细参数</a>|
 |获取推广位|$a->promotionSiteQuery->request($data)|<a href="#获取推广位">详细参数</a>|
+|创建推广位|$a->promotionSiteCreate->request($data)|<a href="#创建推广位">详细参数</a>|
 |工具商同步订单|$open->syncOrderWithKey->request($data)|<a href="#工具商同步订单">详细参数</a>|
 |优惠券,商品二合一转接API-通过unionId获取推广链接|$open->couponCodeByUnionId->request($data)|<a href="#优惠券,商品二合一转接API-通过unionId获取推广链接">详细参数</a>|
 
@@ -53,15 +54,26 @@
 |参数名|参数类型|是否必填|参数样例|参数简介|
 |----|----|----|----|----|
 |unionId|string|是|10111113967|站点ID|
-|key|string|是|ece3b6ab1c8b87a764a7440f71e52c75f5ba90551f9457db4ccf976c3d65745aa8e1481d1e0a50ec|授权Key|
+|key|string|是|ece3b6ab1czzzzzzdb4ccf976c3d65745aa8e1481d1e0a50ec|授权Key|
 |pageNo|int|是|1|页码|
 |pageSize|int|是|12|显示个数|
+
+<a name="获取推广位">获取推广位</a>
+
+|参数名|参数类型|是否必填|参数样例|参数简介|
+|----|----|----|----|----|
+|unionId|string|是|10111113967|站点ID|
+|key|string|是|ece3b6ab1czzzzzzdb4ccf976c3d65745aa8e1481d1e0a50ec|授权Key|
+|unionType|int|是|1|常数1|
+|siteId|int|是|12|对应type的ID|
+|type|int|是|12|1网站推广位2.APP推广位3.社交媒体推广位4.聊天工具推广位5.二维码推广|
+|spaceName|int|是|12|推广位名|
 
 <a name="工具商同步订单">工具商同步订单</a>
 
 |参数名|参数类型|是否必填|参数样例|参数简介|
 |----|----|----|----|----|
-|key|string|是|ece3b6ab1c8b87a764a7440f71e52c75f5ba90551f9457db4ccf976c3d65745aa8e1481d1e0a50ec|授权Key|
+|key|string|是|ece3b6ab1czzzzzzdb4ccf976c3d65745aa8e1481d1e0a50ec|授权Key|
 |time|int|是|1|页码|
 |pageSize|int|是|12|显示个数|
 
