@@ -112,9 +112,17 @@ class Api extends UnionApiIterator
             return false;
         }
         return true;
-    
     }
-    
+
+    public  function __call($name, $arguments)
+    {
+        if(!property_exists($this,$name)){
+            throw new \Exception(sprintf("Call to undefined method JingDongLeague\Union\Kernel\Http\Api::%s()",$name));
+        }else{
+            return $this->$name;
+        }
+    }
+
     public function __get($name)
     {
         if(isset($this->items[$name])) return $this->items[$name];
