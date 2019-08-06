@@ -89,14 +89,24 @@ class Api extends UnionApiIterator
         if(isset($content['errorResponse'])){
             throw new UnionException(json_encode($content));
         }
-        array_walk_recursive ($content,function($value,$key){
+        array_walk_recursive ($content,function($value,$key)use($requestParams){
             if($key=='result'){
-    
                 $result = json_decode($value,true);
                 $this->total = isset($result) && isset($result['totalCount'])?$result['totalCount']:1;
                 $this->items = isset($result) && isset($result['data'])?$result['data']:[];
-                $this->hasNext = isset($result) && isset($result['hasMore'])?$result['hasMore']:false;
-    
+                if(isset($result) && isset($result['hasMore'])){
+                    $this->hasNext = $result['hasMore'];
+                }else{
+                      $param = current($requestParams);
+                      if(isset($param['pageIndex']) && isset($param['pageSize'])){
+                          $this->hasNext=$this->total>($param['pageIndex']*$param['pageSize'])?true:false;
+                      }elseif(isset($param['pageSize'])){
+                          $this->hasNext=count($this->items)==$param['pageSize']?true:false;
+                      }else{
+                          $this->hasNext=false;
+                      }
+                }
+
                 if($result['code']!=200) throw new UnionException($result['message']);
             }
         });
