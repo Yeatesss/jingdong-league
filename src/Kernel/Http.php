@@ -26,7 +26,9 @@ class Http
     
     public function post($url, array $form = []){
         $formData = $this->makeParams($form);
-        $response = Curl::to($url)
+        $curlService = new \Ixudra\Curl\CurlService();
+
+        $response = $curlService->to($url)
             ->withData($formData)
             ->asJsonResponse(true)
             ->returnResponseObject()
@@ -36,7 +38,9 @@ class Http
     }
     
     public function get($url){
-        $response = Curl::to($url)
+        $curlService = new \Ixudra\Curl\CurlService();
+
+        $response = $curlService->to($url)
             ->asJsonResponse(true)
             ->returnResponseObject()
             ->get();

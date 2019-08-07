@@ -10,11 +10,12 @@ use Ixudra\Curl\Facades\Curl;
 
 class Http
 {
-    
+
     
     public function post($url, array $form = []){
-        
-        $response = Curl::to($url)
+        $curlService = new \Ixudra\Curl\CurlService();
+
+        $response = $curlService->to($url)
             ->withData($form)
             ->asJsonResponse(true)
             ->returnResponseObject()
@@ -24,8 +25,9 @@ class Http
     }
     
     public function get($url){
-        
-        $response = Curl::to($url)
+        $curlService = new \Ixudra\Curl\CurlService();
+
+        $response = $curlService->to($url)
             ->asJsonResponse(true)
             ->returnResponseObject()
             ->post();
