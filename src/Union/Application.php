@@ -16,7 +16,10 @@ use JingDongLeague\Union\Kernel\ServiceContainer;
  * @property \JingDongLeague\Union\Promotion\Request\Common    common
  * @property \JingDongLeague\Union\Promotion\Request\ByUnionId    byUnionId
  * @property \JingDongLeague\Union\Promotion\Request\BySubUnionId    bySubUnionId
- * @property JingDongLeague\Union\Order\Request\Order order
+ * @property \JingDongLeague\Union\Order\Request\Order order
+ * @property \JingDongLeague\Union\Pid\Request\PositionCreate positionCreate
+ * @property \JingDongLeague\Union\Pid\Request\PositionQuery positionQuery
+
  */
 class Application extends ServiceContainer
 {
