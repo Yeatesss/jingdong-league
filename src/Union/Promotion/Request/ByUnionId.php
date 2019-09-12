@@ -10,6 +10,6 @@ use JingDongLeague\Union\Kernel\BaseClient;
 
 class ByUnionId extends BaseClient
 {
-    #todo
-    
+    protected $method = 'jd.union.open.promotion.byunionid.get';
+    protected $pre_req = 'promotionCodeReq';
 }

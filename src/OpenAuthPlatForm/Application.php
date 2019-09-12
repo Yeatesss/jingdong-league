@@ -27,7 +27,6 @@ class Application extends ServiceContainer
         PromotionSite\ServiceProvider::class,
         Promotion\ServiceProvider::class,
         Order\ServiceProvider::class
-
     ];
 
     /**

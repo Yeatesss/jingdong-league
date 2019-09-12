@@ -163,6 +163,18 @@ $app= Factory::union([
 |获取通用推广链接|$app->common->request($data)|<a href="#获取通用推广链接">详细参数</a>|
 |获取订单信息|$app->order->request($data);|<a href="#获取订单信息">详细参数</a>|
 |获取推广商品详情|$app->promotionGoods->request($data);|<a href="#获取推广商品详情">详细参数</a>|
+|创建推广位|$app->positionCreate->request($data)|<a href="#创建推广位">详细参数</a>|
+
+<a name="创建推广位">创建推广位</a>
+
+|参数名|参数类型|是否必填|参数样例|参数简介|
+|----|----|----|----|----|
+|unionId|string|是|10111113967|站点ID|
+|key|string|是|ece3b6ab1czzzzzzdb4ccf976c3d65745aa8e1481d1e0a50ec|授权Key|
+|unionType|int|是|1|常数1|
+|siteId|int|是|12|对应type的ID|
+|type|int|是|12|1网站推广位2.APP推广位3.社交媒体推广位4.聊天工具推广位5.二维码推广|
+|spaceName|array|是|['abc','def']|推广位名|
 
 <a name="获取分类">获取分类</a>
 
