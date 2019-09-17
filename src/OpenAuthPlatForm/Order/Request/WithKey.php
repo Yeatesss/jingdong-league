@@ -43,6 +43,7 @@ class WithKey extends BaseClient
     protected $method = 'jingdong.UnionService.queryOrderListWithKey';
     protected $request_type = 'post';
     protected $param = [
+        'unionId'=>'',
         'key'=>'',
         'time'=>'',
         'pageIndex'=>1,
