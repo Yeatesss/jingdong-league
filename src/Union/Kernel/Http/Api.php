@@ -24,7 +24,7 @@ class Api extends UnionApiIterator
     private $total;
     private $hasNext=false;
     private $hotWords;
-        private $similarSkulist;
+        private $similarSkuList;
     
     public function total(){
         return $this->total;
@@ -98,8 +98,8 @@ class Api extends UnionApiIterator
                 if(isset($result) && isset($result['hotWords'])){
                        $this->hotWords = $result['hotWords'];
                 }
-                if(isset($result) && isset($result['similarSkulist'])){
-                       $this->similarSkulist = $result['similarSkulist'];
+                if(isset($result) && isset($result['similarSkuList'])){
+                       $this->similarSkuList = $result['similarSkuList'];
                 }
                 if(isset($result) && isset($result['hasMore'])){
                     $this->hasNext = $result['hasMore'];
