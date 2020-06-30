@@ -23,7 +23,8 @@ class Api extends UnionApiIterator
     private $status;
     private $total;
     private $hasNext=false;
-    
+    private $hotWords;
+        private $similarSkulist;
     
     public function total(){
         return $this->total;
@@ -94,6 +95,12 @@ class Api extends UnionApiIterator
                 $result = json_decode($value,true);
                 $this->total = isset($result) && isset($result['totalCount'])?$result['totalCount']:1;
                 $this->items = isset($result) && isset($result['data'])?$result['data']:[];
+                if(isset($result) && isset($result['hotWords'])){
+                       $this->hotWords = $result['hotWords'];
+                }
+                if(isset($result) && isset($result['similarSkulist'])){
+                       $this->similarSkulist = $result['similarSkulist'];
+                }
                 if(isset($result) && isset($result['hasMore'])){
                     $this->hasNext = $result['hasMore'];
                 }else{
