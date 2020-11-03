@@ -145,8 +145,7 @@ class Api extends UnionApiIterator
     public function __get($name)
     {
         if(isset($this->items[$name])) return $this->items[$name];
-        return $this->$name;
-        throw new \ErrorException(sprintf('Undefined property: %s::$%s',__CLASS__,$name));
+        return property_exists($this,$name)?$this->$name:"";
     }
     
     
