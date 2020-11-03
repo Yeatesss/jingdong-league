@@ -90,33 +90,35 @@ class Api extends UnionApiIterator
         if(isset($content['errorResponse'])){
             throw new UnionException(json_encode($content));
         }
-        array_walk_recursive ($content,function($value,$key)use($requestParams){
-            if($key=='result'){
-                $result = json_decode($value,true);
-                $this->total = isset($result) && isset($result['totalCount'])?$result['totalCount']:1;
-                $this->items = isset($result) && isset($result['data'])?$result['data']:[];
-                if(isset($result) && isset($result['hotWords'])){
-                       $this->hotWords = $result['hotWords'];
+        if(!empty($content)){
+            array_walk_recursive ($content,function($value,$key)use($requestParams){
+                if($key=='result'){
+                    $result = json_decode($value,true);
+                    $this->total = isset($result) && isset($result['totalCount'])?$result['totalCount']:1;
+                    $this->items = isset($result) && isset($result['data'])?$result['data']:[];
+                    if(isset($result) && isset($result['hotWords'])){
+                        $this->hotWords = $result['hotWords'];
+                    }
+                    if(isset($result) && isset($result['similarSkuList'])){
+                        $this->similarSkuList = $result['similarSkuList'];
+                    }
+                    if(isset($result) && isset($result['hasMore'])){
+                        $this->hasNext = $result['hasMore'];
+                    }else{
+                        $param = current($requestParams);
+                        if(isset($param['pageIndex']) && isset($param['pageSize'])){
+                            $this->hasNext=$this->total>($param['pageIndex']*$param['pageSize'])?true:false;
+                        }elseif(isset($param['pageSize'])){
+                            $this->hasNext=count($this->items)==$param['pageSize']?true:false;
+                        }else{
+                            $this->hasNext=false;
+                        }
+                    }
+                    if($result['code']!=200) throw new UnionException($result['message']);
                 }
-                if(isset($result) && isset($result['similarSkuList'])){
-                       $this->similarSkuList = $result['similarSkuList'];
-                }
-                if(isset($result) && isset($result['hasMore'])){
-                    $this->hasNext = $result['hasMore'];
-                }else{
-                      $param = current($requestParams);
-                      if(isset($param['pageIndex']) && isset($param['pageSize'])){
-                          $this->hasNext=$this->total>($param['pageIndex']*$param['pageSize'])?true:false;
-                      }elseif(isset($param['pageSize'])){
-                          $this->hasNext=count($this->items)==$param['pageSize']?true:false;
-                      }else{
-                          $this->hasNext=false;
-                      }
-                }
+            });
+        }
 
-                if($result['code']!=200) throw new UnionException($result['message']);
-            }
-        });
         return $this;
         
     }
